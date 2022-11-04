@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
             if (inZone)
             {
                 currentWins++;
-                Debug.Log(currentWins);
                 if(currentWins == needCountWins)
                 {
                     winEvents.Invoke();
@@ -49,7 +48,6 @@ public class GameManager : MonoBehaviour
             else
             {
                 currentWins = 0;
-                Debug.Log(currentWins);
                 StartCoroutine(wait());
             }
         }
