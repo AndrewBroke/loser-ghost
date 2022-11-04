@@ -196,6 +196,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 267175480, guid: c7d6e628cbb0c6f409e76eab18f8a411, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 784a8149dd539124d8f7c7766f6730f8, type: 2}
     - target: {fileID: 6347849122209866443, guid: c7d6e628cbb0c6f409e76eab18f8a411, type: 3}
       propertyPath: m_Name
       value: MiniGame

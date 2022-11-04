@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 6347849120819446770}
   - component: {fileID: 6347849120819446769}
   - component: {fileID: 2037207735}
+  - component: {fileID: 346115309}
   m_Layer: 0
   m_Name: Circle
   m_TagString: Untagged
@@ -137,6 +138,25 @@ PolygonCollider2D:
       - {x: 0.18759595, y: 0.26389277}
       - {x: 0.14430803, y: 0.2991155}
     - - {x: -0.21, y: 0.16}
+--- !u!95 &346115309
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6347849120819446768}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 40d2e7db76891f14baa38b25c7eef633, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6347849122209866443
 GameObject:
   m_ObjectHideFlags: 0
@@ -147,6 +167,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6347849122209866444}
   - component: {fileID: 6347849122209866445}
+  - component: {fileID: 267175480}
   m_Layer: 0
   m_Name: MiniGame
   m_TagString: Untagged
@@ -186,6 +207,30 @@ MonoBehaviour:
   pointerTransorm: {fileID: 6347849122429822964}
   inZone: 0
   needCountWins: 3
+  winEvents:
+    m_PersistentCalls:
+      m_Calls: []
+  timeWaitEnd: 1
+  timeWaitStart: 0.5
+--- !u!95 &267175480
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6347849122209866443}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 0}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!1 &6347849122429822961
 GameObject:
   m_ObjectHideFlags: 0
@@ -199,6 +244,7 @@ GameObject:
   - component: {fileID: 6347849122429822962}
   - component: {fileID: 6347849122429822965}
   - component: {fileID: 6347849122429822966}
+  - component: {fileID: 1681396969}
   m_Layer: 0
   m_Name: Pointer
   m_TagString: pointer
@@ -283,9 +329,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8d8dc4eb48889b24b977df793437a359, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RotateSpeed: 4
-  RotateRadiusX: 1.2
-  RotateRadiusY: 1.2
+  isMoving: 1
+  rotateSpeed: 4
+  rotateRadiusX: 1.2
+  rotateRadiusY: 1.2
   speed: 4.58
   target: {fileID: 6347849122429822964}
 --- !u!61 &6347849122429822965
@@ -335,3 +382,22 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!95 &1681396969
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6347849122429822961}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 89bc20f8bad186240b60ff95eaa5bcb4, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorControllerStateOnDisable: 0
