@@ -13,6 +13,9 @@ public class GameManager : MonoBehaviour
     [SerializeField] int needCountWins = 3;
     [SerializeField] UnityEvent winEvents;
 
+    [SerializeField]
+    float timeWaitEnd = 1, timeWaitStart = 0.5f;
+
     int currentWins = 0;
     CheckZone checkZone;
     Pointer pointer;
@@ -40,17 +43,25 @@ public class GameManager : MonoBehaviour
                 }
                 else
                 {
-                    checkZone.RandRotate();
-                    pointer.ReturnToStart();
+                    StartCoroutine(wait());
                 }
             }
             else
             {
                 currentWins = 0;
                 Debug.Log(currentWins);
-                checkZone.RandRotate();
-                pointer.ReturnToStart();
+                StartCoroutine(wait());
             }
         }
+    }
+
+    IEnumerator wait()
+    {
+        pointer.isMoving = false;
+        yield return new WaitForSeconds(timeWaitEnd);
+        checkZone.RandRotate();
+        pointer.ReturnToStart();
+        yield return new WaitForSeconds(timeWaitStart);
+        pointer.isMoving = true;
     }
 }
