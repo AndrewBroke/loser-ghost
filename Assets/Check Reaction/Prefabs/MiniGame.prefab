@@ -331,8 +331,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   isMoving: 1
   rotateSpeed: 4
-  rotateRadiusX: 0.32
-  rotateRadiusY: 0.32
+  radiusRotate: 0
   speed: 4.58
   target: {fileID: 6347849122429822964}
 --- !u!61 &6347849122429822965

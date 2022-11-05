@@ -25,6 +25,9 @@ public class GameManager : MonoBehaviour
     {
         checkZone = circleTransform.GetComponent<CheckZone>();
         pointer = pointerTransorm.GetComponent<Pointer>();
+
+        float scale = transform.localScale.x;
+        pointer.radiusRotate = scale + 0.2f * scale;
     }
 
     // Update is called once per frame

@@ -8,7 +8,9 @@ public class Pointer : MonoBehaviour
     public bool isMoving = true;
 
     [SerializeField]
-    float rotateSpeed = 1f, rotateRadiusX = 1f, rotateRadiusY = 1f;
+    float rotateSpeed = 1f;
+
+    [HideInInspector] public float radiusRotate;
 
     private Vector2 _centre;
     private float _angle;
@@ -30,7 +32,7 @@ public class Pointer : MonoBehaviour
         startX = transform.position.x;
         startY = transform.position.y;
         _centre = transform.position;
-        transform.position = _centre + new Vector2(Mathf.Sin(_angle) * rotateRadiusX, Mathf.Cos(_angle) * rotateRadiusY);
+        transform.position = _centre + new Vector2(Mathf.Sin(_angle) * radiusRotate, Mathf.Cos(_angle) * radiusRotate);
     }
 
     // Update is called once per frame
@@ -39,8 +41,8 @@ public class Pointer : MonoBehaviour
         if (isMoving)// && !animator.GetCurrentAnimatorStateInfo(0).IsName("appearance"))
         {
             _angle += rotateSpeed * Time.deltaTime;
-            var x = Mathf.Sin(_angle) * rotateRadiusX;
-            var y = Mathf.Cos(_angle) * rotateRadiusY;
+            var x = Mathf.Sin(_angle) * radiusRotate;
+            var y = Mathf.Cos(_angle) * radiusRotate;
             transform.position = _centre + new Vector2(x, y);
         }
         
@@ -58,7 +60,7 @@ public class Pointer : MonoBehaviour
     {
         GetComponent<Animator>().SetTrigger("appearance");
         _angle = 0;
-        transform.position = _centre + new Vector2(Mathf.Sin(_angle) * rotateRadiusX, Mathf.Cos(_angle) * rotateRadiusY);
+        transform.position = _centre + new Vector2(Mathf.Sin(_angle) * radiusRotate, Mathf.Cos(_angle) * radiusRotate);
         transform.eulerAngles = new Vector3(0,0,-90);
     }
 }
