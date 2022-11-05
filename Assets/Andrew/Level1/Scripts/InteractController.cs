@@ -61,7 +61,13 @@ public class InteractController : MonoBehaviour
     {
         _isMiniGameStarted = true;
         miniGame.SetActive(true);
-        NewFollowTarget();
+        StartCoroutine("ChangeCameraSize");
+        //NewFollowTarget();
+    }
+
+    public void EndMiniGame()
+    {
+        StartCoroutine("ChangeCameraSize");
     }
 
     public void NewFollowTarget()

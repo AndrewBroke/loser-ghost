@@ -36,7 +36,7 @@ public class Pointer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (isMoving && !animator.GetCurrentAnimatorStateInfo(0).IsName("appearance"))
+        if (isMoving)// && !animator.GetCurrentAnimatorStateInfo(0).IsName("appearance"))
         {
             _angle += rotateSpeed * Time.deltaTime;
             var x = Mathf.Sin(_angle) * rotateRadiusX;
@@ -48,7 +48,7 @@ public class Pointer : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (isMoving && !animator.GetCurrentAnimatorStateInfo(0).IsName("appearance"))
+        if (isMoving)// && !animator.GetCurrentAnimatorStateInfo(0).IsName("appearance"))
         {
             transform.RotateAround(target.position, zAxis, speed);
         }

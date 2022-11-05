@@ -2,24 +2,33 @@ using Cinemachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
+using TMPro;
 
 public class DialogueController : MonoBehaviour
 {
-    [SerializeField] GameObject text;
-    [SerializeField] GameObject dialogueWindow;
+    [Header("Dialogue Text")]
+    [SerializeField] TextMeshProUGUI text;
+    [SerializeField] CanvasGroup dialogueWindow;
+    [Space]
+    [SerializeField][TextAreaAttribute] string dialogueText;
 
     [Header("Camera Settings")]
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] float newCameraSize;
+    [SerializeField] float initialCameraSize;
 
-    private float _initialCameraSize;
+    [Space]
+    [SerializeField] UnityEvent endEvents;
+
+    
     private GameObject _player;
 
     private bool _canCancel = false;
     // Start is called before the first frame update
     void Start()
     {
-        _initialCameraSize = virtualCamera.m_Lens.OrthographicSize;
+        
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -41,19 +50,25 @@ public class DialogueController : MonoBehaviour
         }
     }
 
+    public void StartCutSceneInTime(float time)
+    {
+        Invoke("StartCutScene", time);
+    }
+
     private void StartCutScene()
     {
-        dialogueWindow.SetActive(true);
-        //text.SetActive(true);
+        dialogueWindow.alpha = 1.0f;
+        text.text = dialogueText;
         StartCoroutine("ChangeCameraSize");
         Invoke("EnableCancel", 3);
     }
 
     private void EndCutScene()
     {
-        dialogueWindow.SetActive(false);
-        text.SetActive(false);
+        dialogueWindow.alpha = 0f;
+
         StartCoroutine("ChangeCameraSize");
+        endEvents.Invoke();
         Destroy(gameObject, 2);
     }
 
@@ -62,7 +77,7 @@ public class DialogueController : MonoBehaviour
         Movement movement = _player.GetComponent<Movement>();
         movement.canMove = !movement.canMove;
 
-        float delta = (_initialCameraSize - newCameraSize) / 60.0f;
+        float delta = (initialCameraSize - newCameraSize) / 60.0f;
 
         if (virtualCamera.m_Lens.OrthographicSize == newCameraSize)
         {
@@ -71,7 +86,7 @@ public class DialogueController : MonoBehaviour
                 virtualCamera.m_Lens.OrthographicSize += delta;
                 yield return new WaitForSeconds(1 / 60.0f);
             }
-            virtualCamera.m_Lens.OrthographicSize = _initialCameraSize;
+            virtualCamera.m_Lens.OrthographicSize = initialCameraSize;
         }
         else
         {
