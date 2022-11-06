@@ -69,7 +69,13 @@ public class DialogueController : MonoBehaviour
 
         StartCoroutine("ChangeCameraSize");
         endEvents.Invoke();
-        Destroy(gameObject, 2);
+        Collider2D collider;
+        if(TryGetComponent<Collider2D>(out collider))
+        {
+            collider.enabled = false;
+        }
+        
+        Destroy(gameObject, 1);
     }
 
     IEnumerator ChangeCameraSize()

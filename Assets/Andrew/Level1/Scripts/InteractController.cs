@@ -18,15 +18,15 @@ public class InteractController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera virtualCamera;
     [SerializeField] private Transform target;
     [SerializeField] float newCameraSize;
+    [SerializeField] float initialCameraSize;
 
     private bool _inCollider = false;
-    private float _initialCameraSize;
     private GameObject _player;
     private bool _isMiniGameStarted = false;
     // Start is called before the first frame update
     void Start()
     {
-        _initialCameraSize = virtualCamera.m_Lens.OrthographicSize;
+        
         _player = GameObject.FindGameObjectWithTag("Player");
     }
 
@@ -86,7 +86,7 @@ public class InteractController : MonoBehaviour
 
     IEnumerator ChangeCameraSize()
     {
-        float delta = (_initialCameraSize - newCameraSize) / 60.0f;
+        float delta = (initialCameraSize - newCameraSize) / 60.0f;
 
         if (virtualCamera.m_Lens.OrthographicSize == newCameraSize)
         {
@@ -95,7 +95,7 @@ public class InteractController : MonoBehaviour
                 virtualCamera.m_Lens.OrthographicSize += delta;
                 yield return new WaitForSeconds(1/60.0f);
             }
-            virtualCamera.m_Lens.OrthographicSize = _initialCameraSize;
+            virtualCamera.m_Lens.OrthographicSize = initialCameraSize;
         }
         else
         {
