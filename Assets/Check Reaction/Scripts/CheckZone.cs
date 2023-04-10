@@ -9,7 +9,7 @@ public class CheckZone : MonoBehaviour
     
     void Awake()
     {
-        gameManager = transform.parent.GetComponent<GameManager>();
+        gameManager = transform.parent.gameObject.GetComponent<GameManager>();
         RandRotate();
     }
 

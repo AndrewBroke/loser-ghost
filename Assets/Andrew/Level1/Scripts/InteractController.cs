@@ -61,13 +61,16 @@ public class InteractController : MonoBehaviour
     {
         _isMiniGameStarted = true;
         miniGame.SetActive(true);
+        _player.GetComponent<Movement>().canMove = false;
+        exitEvents.Invoke();
         StartCoroutine("ChangeCameraSize");
-        //NewFollowTarget();
     }
 
     public void EndMiniGame()
     {
+        _player.GetComponent<Movement>().canMove = true;
         StartCoroutine("ChangeCameraSize");
+        Destroy(gameObject, 1.5f);
     }
 
     public void NewFollowTarget()

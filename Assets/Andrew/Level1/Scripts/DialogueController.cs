@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using TMPro;
+using UnityEngine.Rendering.PostProcessing;
 
 public class DialogueController : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class DialogueController : MonoBehaviour
     
     private GameObject _player;
 
+    private bool _inTrigger = false;
+
     private bool _canCancel = false;
     // Start is called before the first frame update
     void Start()
@@ -35,7 +38,7 @@ public class DialogueController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Return) && _canCancel)
+        if(Input.GetKeyDown(KeyCode.Return) && _inTrigger)
         {
             EndCutScene();
             _canCancel = false;
@@ -46,7 +49,16 @@ public class DialogueController : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
+            _inTrigger = true;
             StartCutScene();
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.CompareTag("Player"))
+        {
+            _inTrigger = false;
         }
     }
 
@@ -59,15 +71,15 @@ public class DialogueController : MonoBehaviour
     {
         dialogueWindow.alpha = 1.0f;
         text.text = dialogueText;
-        StartCoroutine("ChangeCameraSize");
+        StartCoroutine("MakeCameraCloser");
         Invoke("EnableCancel", 3);
     }
 
     private void EndCutScene()
     {
         dialogueWindow.alpha = 0f;
-
-        StartCoroutine("ChangeCameraSize");
+        StopCoroutine("MakeCameraCloser");
+        StartCoroutine("MakeCameraAway");
         endEvents.Invoke();
         Collider2D collider;
         if(TryGetComponent<Collider2D>(out collider))
@@ -75,13 +87,55 @@ public class DialogueController : MonoBehaviour
             collider.enabled = false;
         }
         
-        Destroy(gameObject, 1);
+        Destroy(gameObject, 1.5f);
+    }
+
+    IEnumerator MakeCameraAway()
+    {
+        Movement movement = _player.GetComponent<Movement>();
+        movement.canMove = true;
+
+        PostProcessVolume ppVolume = Camera.main.GetComponent<PostProcessVolume>();
+
+        float delta = (initialCameraSize - newCameraSize) / 60.0f;
+        for (int i = 0; i < 60; i++)
+        {
+            virtualCamera.m_Lens.OrthographicSize += delta;
+            ppVolume.weight -= 1 / 60.0f;
+            if (virtualCamera.m_Lens.OrthographicSize >= initialCameraSize) break;
+            yield return new WaitForSeconds(1 / 60.0f);
+        }
+
+        ppVolume.weight = 0;
+        virtualCamera.m_Lens.OrthographicSize = initialCameraSize;
+    }
+
+    IEnumerator MakeCameraCloser()
+    {
+        Movement movement = _player.GetComponent<Movement>();
+        movement.canMove = false;
+
+        PostProcessVolume ppVolume = Camera.main.GetComponent<PostProcessVolume>();
+        float delta = (initialCameraSize - newCameraSize) / 60.0f;
+
+        for (int i = 0; i < 60; i++)
+        {
+            virtualCamera.m_Lens.OrthographicSize -= delta;
+            ppVolume.weight += 1 / 60.0f;
+            if (virtualCamera.m_Lens.OrthographicSize <= newCameraSize) break;
+            yield return new WaitForSeconds(1 / 60.0f);
+        }
+        ppVolume.weight = 1;
+        virtualCamera.m_Lens.OrthographicSize = newCameraSize;
+        movement.canMove = !movement.canMove;
     }
 
     IEnumerator ChangeCameraSize()
     {
         Movement movement = _player.GetComponent<Movement>();
         movement.canMove = !movement.canMove;
+
+        PostProcessVolume ppVolume = Camera.main.GetComponent<PostProcessVolume>();
 
         float delta = (initialCameraSize - newCameraSize) / 60.0f;
 
@@ -90,8 +144,11 @@ public class DialogueController : MonoBehaviour
             for (int i = 0; i < 60; i++)
             {
                 virtualCamera.m_Lens.OrthographicSize += delta;
+                ppVolume.weight -= 1 / 60.0f;
                 yield return new WaitForSeconds(1 / 60.0f);
             }
+            
+            ppVolume.weight = 0;
             virtualCamera.m_Lens.OrthographicSize = initialCameraSize;
         }
         else
@@ -99,8 +156,10 @@ public class DialogueController : MonoBehaviour
             for (int i = 0; i < 60; i++)
             {
                 virtualCamera.m_Lens.OrthographicSize -= delta;
+                ppVolume.weight += 1 / 60.0f;
                 yield return new WaitForSeconds(1 / 60.0f);
             }
+            ppVolume.weight = 1;
             virtualCamera.m_Lens.OrthographicSize = newCameraSize;
         }
     }

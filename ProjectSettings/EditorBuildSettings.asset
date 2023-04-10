@@ -9,9 +9,15 @@ EditorBuildSettings:
     path: Assets/Andrew/Menu/Main Menu.unity
     guid: 568d1bb46791cd34aa8d7624c31bfbf5
   - enabled: 1
+    path: Assets/Andrew/Intro/Intro.unity
+    guid: 58baf886aa431584786655736cc1d359
+  - enabled: 1
     path: Assets/Andrew/Level1/level1_main.unity
     guid: e618e056f1c2c2b4ca0ae6bf85b3eac1
   - enabled: 1
-    path: Assets/Andrew/Intro/Intro.unity
-    guid: 58baf886aa431584786655736cc1d359
+    path: Assets/Andrew/Level2/Level2.unity
+    guid: 6d4c5f0f115110e459d93dfb81e1de23
+  - enabled: 1
+    path: Assets/Andrew/To be continued/To be continued.unity
+    guid: ef7ebe08c4573ee42939519d287f3f86
   m_configObjects: {}

@@ -8,7 +8,7 @@ public class IntroController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        Invoke("EndIntro", 5.5f);
+        Invoke("EndIntro", 6.5f);
     }
 
     // Update is called once per frame
