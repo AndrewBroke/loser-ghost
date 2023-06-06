@@ -13,7 +13,7 @@ TagManager:
   - Post Processing
   - Water
   - UI
-  - 
+  - Ignore Shadow
   - 
   - 
   - 
@@ -42,4 +42,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Ignore Shadow
+    uniqueID: 745088165
     locked: 0
