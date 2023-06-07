@@ -46,3 +46,6 @@ TagManager:
   - name: Ignore Shadow
     uniqueID: 745088165
     locked: 0
+  - name: Player
+    uniqueID: 3998454215
+    locked: 0
